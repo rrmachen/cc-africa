@@ -2,6 +2,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import { buildConfig } from 'payload';
 import { postgresAdapter } from '@payloadcms/db-postgres';
+import { lexicalEditor } from '@payloadcms/richtext-lexical';
 import { Churches } from './collections/Churches.js';
 import { Media } from './collections/Media.js';
 import { Users } from './collections/Users.js';
@@ -18,6 +19,7 @@ const allowedOrigins = [
 export default buildConfig({
   secret: process.env.PAYLOAD_SECRET || 'YOUR_SECRET_HERE',
   serverURL: process.env.PAYLOAD_PUBLIC_SERVER_URL,
+  editor: lexicalEditor(),
   admin: {
     user: Users.slug,
   },
