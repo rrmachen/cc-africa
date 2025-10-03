@@ -1,0 +1,30 @@
+databases:
+  - name: cc-africa-db
+    databaseName: cc_africa
+    plan: free
+    region: oregon
+
+services:
+  # Payload CMS API
+  - type: web
+    name: cc-africa-cms
+    runtime: node
+    plan: free
+    region: oregon
+    buildCommand: npm install && cd apps/cms && npm run build
+    startCommand: cd apps/cms && npm start
+    envVars:
+      - key: NODE_VERSION
+        value: 20.11.0
+      - key: PAYLOAD_SECRET
+        generateValue: true
+      - key: DATABASE_URL
+        fromDatabase:
+          name: cc-africa-db
+          property: connectionString
+      - key: DATABASE_SSL
+        value: true
+      - key: PORT
+        value: 10000
+      - key: PAYLOAD_PUBLIC_SERVER_URL
+        value: https://cc-africa-cms.onrender.com
