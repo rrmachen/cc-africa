@@ -1,9 +1,13 @@
 import path from 'path';
+import { fileURLToPath } from 'url';
 import { buildConfig } from 'payload';
 import { postgresAdapter } from '@payloadcms/db-postgres';
-import { Churches } from './collections/Churches';
-import { Media } from './collections/Media';
-import { Users } from './collections/Users';
+import { Churches } from './collections/Churches.js';
+import { Media } from './collections/Media.js';
+import { Users } from './collections/Users.js';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const allowedOrigins = [
   'http://localhost:3000',

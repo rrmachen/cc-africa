@@ -1,5 +1,5 @@
 import type { CollectionConfig } from 'payload';
-import { canManageUsers, canReadOwnUser, isAdmin } from '../utils/access';
+import { canManageUsers, canReadOwnUser, isAdmin } from '../utils/access.js';
 
 export const Users: CollectionConfig = {
   slug: 'users',

@@ -5,7 +5,7 @@ import {
   canManageChurch,
   isAdmin,
   transformStatusForEditors,
-} from '../utils/access';
+} from '../utils/access.js';
 
 export const Churches: CollectionConfig = {
   slug: 'churches',

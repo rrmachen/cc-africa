@@ -1,8 +1,11 @@
 import payload from 'payload';
 import path from 'path';
+import { fileURLToPath } from 'url';
 import dotenv from 'dotenv';
-import config from './payload.config';
+import config from './payload.config.js';
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 const projectRoot = path.resolve(__dirname, '..');
 const envPath = path.resolve(projectRoot, '.env');
 dotenv.config({ path: envPath });
