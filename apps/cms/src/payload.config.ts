@@ -1,5 +1,5 @@
 import path from 'path';
-import { buildConfig } from 'payload/config';
+import { buildConfig } from 'payload';
 import { postgresAdapter } from '@payloadcms/db-postgres';
 import { Churches } from './collections/Churches';
 import { Media } from './collections/Media';
@@ -12,6 +12,7 @@ const allowedOrigins = [
 ].filter((value): value is string => Boolean(value));
 
 export default buildConfig({
+  secret: process.env.PAYLOAD_SECRET || 'YOUR_SECRET_HERE',
   serverURL: process.env.PAYLOAD_PUBLIC_SERVER_URL,
   admin: {
     user: Users.slug,

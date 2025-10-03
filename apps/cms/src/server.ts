@@ -2,6 +2,7 @@ import path from 'path';
 import express from 'express';
 import payload from 'payload';
 import dotenv from 'dotenv';
+import config from './payload.config';
 
 const projectRoot = path.resolve(__dirname, '..');
 const envPath = path.resolve(projectRoot, '.env');
@@ -16,15 +17,8 @@ app.get('/', (_req, res) => {
 });
 
 const start = async () => {
-  const isProduction = process.env.NODE_ENV === 'production';
-  const configPath = isProduction
-    ? path.resolve(projectRoot, 'dist/payload.config.js')
-    : path.resolve(projectRoot, 'src/payload.config.ts');
-
   await payload.init({
-    secret: process.env.PAYLOAD_SECRET || '',
-    express: app,
-    config: configPath,
+    config,
     onInit: async (cms) => {
       cms.logger.info('Payload CMS is ready.');
     },

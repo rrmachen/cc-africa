@@ -1,18 +1,15 @@
 import payload from 'payload';
 import path from 'path';
 import dotenv from 'dotenv';
+import config from './payload.config';
 
 const projectRoot = path.resolve(__dirname, '..');
 const envPath = path.resolve(projectRoot, '.env');
 dotenv.config({ path: envPath });
 
 const seedData = async () => {
-  const configPath = path.resolve(projectRoot, 'src/payload.config.ts');
-
   await payload.init({
-    secret: process.env.PAYLOAD_SECRET || '',
-    config: configPath,
-    local: true,
+    config,
   });
 
   console.log('🌱 Starting seed process...\n');

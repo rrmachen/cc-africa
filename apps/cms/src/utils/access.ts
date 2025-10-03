@@ -1,14 +1,15 @@
-import type { PayloadRequest } from 'payload/types';
-
 export type AppUser = {
-  id: string;
+  id: string | number;
   email?: string;
   roles?: string[];
   assignedChurches?: (string | { id: string })[];
 };
 
-export type AccessArgs<TUser = AppUser> = {
-  req: PayloadRequest<TUser>;
+export type AccessArgs = {
+  req: {
+    user?: any;
+    payload?: any;
+  };
   id?: string | number;
   doc?: Record<string, unknown> | null;
 };
@@ -28,17 +29,17 @@ export const isAdmin = (user: AppUser | null | undefined): boolean => hasRole(us
 
 export const isEditor = (user: AppUser | null | undefined): boolean => hasRole(user, 'churchEditor');
 
-export const canManageUsers = ({ req }: AccessArgs<AppUser>): boolean => {
+export const canManageUsers = ({ req }: AccessArgs): boolean => {
   return isAdmin(req.user);
 };
 
-export const canReadOwnUser = ({ req, id }: AccessArgs<AppUser>): boolean => {
+export const canReadOwnUser = ({ req, id }: AccessArgs): boolean => {
   if (!req.user) return false;
   if (isAdmin(req.user)) return true;
   return req.user.id === id;
 };
 
-export const canManageChurch = ({ req, id, doc }: AccessArgs<AppUser>): boolean => {
+export const canManageChurch = ({ req, id, doc }: AccessArgs): boolean => {
   const user = req.user;
   if (!user) return false;
   if (isAdmin(user)) return true;
@@ -58,7 +59,7 @@ export const canManageChurch = ({ req, id, doc }: AccessArgs<AppUser>): boolean 
   return false;
 };
 
-export const canCreateChurch = ({ req }: AccessArgs<AppUser>): boolean => {
+export const canCreateChurch = ({ req }: AccessArgs): boolean => {
   const user = req.user;
   if (!user) return false;
   if (isAdmin(user)) return true;
@@ -66,7 +67,7 @@ export const canCreateChurch = ({ req }: AccessArgs<AppUser>): boolean => {
   return true;
 };
 
-export const canUploadMedia = ({ req }: AccessArgs<AppUser>): boolean => {
+export const canUploadMedia = ({ req }: AccessArgs): boolean => {
   const user = req.user;
   if (!user) return false;
   return isAdmin(user) || isEditor(user);

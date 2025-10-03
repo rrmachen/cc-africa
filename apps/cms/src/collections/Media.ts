@@ -1,13 +1,11 @@
 import path from 'path';
-import type { CollectionConfig } from 'payload/types';
+import type { CollectionConfig } from 'payload';
 import { canUploadMedia, isAdmin } from '../utils/access';
 
 export const Media: CollectionConfig = {
   slug: 'media',
   upload: {
-    disableLocalStorage: false,
     staticDir: path.resolve(__dirname, '../../media'),
-    staticURL: '/media',
     imageSizes: [
       {
         name: 'thumbnail',
@@ -24,7 +22,7 @@ export const Media: CollectionConfig = {
     read: () => true,
     create: canUploadMedia,
     update: canUploadMedia,
-    delete: ({ req }) => isAdmin(req.user),
+    delete: ({ req }) => isAdmin(req.user as any),
   },
   fields: [],
 };

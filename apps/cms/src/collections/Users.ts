@@ -1,4 +1,4 @@
-import type { CollectionConfig } from 'payload/types';
+import type { CollectionConfig } from 'payload';
 import { canManageUsers, canReadOwnUser, isAdmin } from '../utils/access';
 
 export const Users: CollectionConfig = {
@@ -12,7 +12,7 @@ export const Users: CollectionConfig = {
   },
   access: {
     read: ({ req, id }) => {
-      if (isAdmin(req.user)) return true;
+      if (isAdmin(req.user as any)) return true;
       if (id && req.user?.id === id) return true;
       return false;
     },
